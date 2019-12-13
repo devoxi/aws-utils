@@ -10,13 +10,14 @@ import (
 )
 
 func main() {
-	if len(os.Args) != 2 {
+	if len(os.Args) != 3 {
 		log.Fatal("Bad arguments")
 	}
-	instanceName := os.Args[1]
+	regionName := os.Args[1]
+	instanceName := os.Args[2]
 
 	sess := session.Must(session.NewSession(&aws.Config{
-		Region: aws.String("eu-west-1"),
+		Region: aws.String(regionName),
 	}))
 	svc := ec2.New(sess)
 
@@ -26,7 +27,7 @@ func main() {
 		Values: tagValues,
 	}}
 	params := &ec2.DescribeInstancesInput{
-		Filters:     filters,
+		Filters: filters,
 	}
 	describeInstancesOutput, err := svc.DescribeInstances(params)
 	if err != nil {
