@@ -1,1 +1,5 @@
 # AWS UTILS
+
+```
+$ make
+```
